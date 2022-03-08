@@ -6,26 +6,28 @@ The current list of libraries:
 - [`containers/image`](https://github.com/containers/image), called "skopeo" here
  since [`skopeo`](https://github.com/containers/skopeo) is the most well-known entrypoint for this library.
 - [`google/go-containerregistry`](https://github.com/google/go-containerregistry),
-specifically the [`crane` package](https://github.com/google/go-containerregistry/tree/master/pkg/crane).
+specifically the [`crane` package](https://github.com/google/go-containerregistry/tree/main/pkg/crane).
 
 ## Benchmarks
 
 You can run benchmarks on your machine by running `make`.
 
-Current stats:
+Hardware info:
 
-```console
-$ make BT=1000x
+```
 goos: linux
 goarch: amd64
 pkg: gitlab.com/estroz/go-image-lib-benchmark
 cpu: 11th Gen Intel(R) Core(TM) i7-1195G7 @ 2.90GHz
-PASS
+```
+
+Current stats:
+
+```
 benchmark               iter     time/iter    bytes alloc           allocs
 ---------               ----     ---------    -----------           ------
 BenchmarkCopySkopeo-8   1000   10.05 ms/op   1119918 B/op   6660 allocs/op
 BenchmarkCopyCrane-8    1000    1.33 ms/op    417651 B/op   2985 allocs/op
-ok      gitlab.com/estroz/go-image-lib-benchmark        15.902s
 ```
 
 ## CLI
