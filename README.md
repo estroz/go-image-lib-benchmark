@@ -15,18 +15,17 @@ You can run benchmarks on your machine by running `make`.
 Current stats:
 
 ```console
-$ make V=1
-CGO_ENABLED=0 go test -bench=. -benchmem -benchtime=10s -tags containers_image_openpgp -v
+$ make BT=1000x
 goos: linux
 goarch: amd64
 pkg: gitlab.com/estroz/go-image-lib-benchmark
 cpu: 11th Gen Intel(R) Core(TM) i7-1195G7 @ 2.90GHz
-BenchmarkCopySkopeo
-BenchmarkCopySkopeo-8               1114          10202165 ns/op         1092486 B/op       6592 allocs/op
-BenchmarkCopyCrane
-BenchmarkCopyCrane-8                7525           1416258 ns/op          413058 B/op       2981 allocs/op
 PASS
-ok      gitlab.com/estroz/go-image-lib-benchmark        42.700s
+benchmark               iter     time/iter    bytes alloc           allocs
+---------               ----     ---------    -----------           ------
+BenchmarkCopySkopeo-8   1000   10.05 ms/op   1119918 B/op   6660 allocs/op
+BenchmarkCopyCrane-8    1000    1.33 ms/op    417651 B/op   2985 allocs/op
+ok      gitlab.com/estroz/go-image-lib-benchmark        15.902s
 ```
 
 ## CLI
@@ -36,9 +35,7 @@ You can invoke supported library copy-like methods via CLI:
 ```sh
 docker pull nginx:latest
 docker pull registry:2
-make cli
 docker run -d -p 127.0.0.1:5000:5000 --restart always --name registry-crane registry:2
-time ./bin/cli crane copy nginx:latest localhost:5000/nginx:latest
-docker run -d -p 127.0.0.1:5001:5000 --restart always --name registry-skopeo registry:2
-time ./bin/cli skopeo copy docker://nginx:latest docker://localhost:5001/nginx:latest
+make cli
+./bin/cli crane copy nginx:latest localhost:5000/nginx:latest
 ```
